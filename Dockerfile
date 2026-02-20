@@ -1,12 +1,20 @@
-FROM python:3.12-slim
+# jupyter/Dockerfile
+FROM python:3.11-slim
 
-WORKDIR /app
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /workspace
 
-COPY . .
+COPY pyproject.toml .
 
-EXPOSE 8989
+RUN uv sync
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8989"]
+EXPOSE 8888
+
+CMD ["uv", "run", "jupyter", "lab", \
+     "--ip=0.0.0.0", \
+     "--port=8888", \
+     "--no-browser", \
+     "--allow-root", \
+     "--NotebookApp.token=''", \
+     "--NotebookApp.password=''"]
