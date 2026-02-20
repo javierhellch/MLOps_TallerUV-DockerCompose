@@ -87,26 +87,11 @@ Recibe las características de un pingüino y retorna la predicción.
 
 ---
 
-## Construir archivos de Docker Compose
-1. Dockerfile de JupyterLab
-2. Definir dependencias con UV
-3. Docker Compose 
-```
-![Texto Alternativo](images/api.png)
+## Archivos de Docker Compose y JupyterLab + UV
+1. Dockerfile de JupyterLab: /jupyter/Dockerfile
+2. Definir dependencias con UV: /jupyter/pyproject.toml
+3. Docker Compose: ./docker-compose.yaml  
 
-![Texto Alternativo](images/getmodels.png)
-
----
-
-## Ejecución con Docker
-
-### 1. Construir la imagen
-
-Desde la raíz del proyecto:
-
-```bash
-docker build -t penguins-api .
-```
 ![Texto Alternativo](images/docker.png)
 
 ### 2. Ejecutar el contenedor
