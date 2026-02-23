@@ -1,14 +1,10 @@
-# api/Dockerfile
+FROM python:3.12-slim
 
-FROM python:3.11-slim
-
-# Instalamos uv
 RUN pip install --no-cache-dir uv
 
-# Directorio de trabajo
 WORKDIR /app
 
-# Copiamos pyproject global y lockfile
+# Copiamos metadata primero (mejor cache)
 COPY pyproject.toml uv.lock ./
 
 # Instalamos dependencias sin dev
