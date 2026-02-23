@@ -92,166 +92,18 @@ Recibe las características de un pingüino y retorna la predicción.
 2. Definir dependencias con UV: /jupyter/pyproject.toml
 3. Docker Compose: ./docker-compose.yaml  
 
-![Texto Alternativo](images/docker.png)
+Líneas de ejecución
 
-### 2. Ejecutar el contenedor
+# Construir la imagen
+docker compose build
 
-```bash
-docker run -p 8989:8989 penguins-api
-```
-![Texto Alternativo](images/dockerup.png)
+# Levantar el servicio
+docker compose up -d
 
-![Texto Alternativo](images/dockerup2.png)
+# Ver logs
+docker compose logs -f jupyter
 
-### 3. Acceder a la API
-
-```
-http://localhost:8989/docs
-```
-
-![Texto Alternativo](images/apidocker.png)
-
----
-
-## Tecnologías utilizadas
-
-- Python 3.12
-- Scikit-Learn
-- FastAPI
-- Uvicorn
-- Docker
-- Joblib
-- Pandas
-
----
-
-
----
-
-## Docker – Detalles de Contenerización
-
-Durante este taller se agregó contenerización completa de la API para garantizar reproducibilidad y portabilidad del servicio.
-
-### Configuración del Dockerfile
-
-- Imagen base: `python:3.12-slim`
-- Instalación de dependencias desde `requirements.txt`
-- Exposición del puerto `8989`
-- Ejecución del servidor con:
-
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8989
-```
-
-El uso de `0.0.0.0` permite que la aplicación sea accesible fuera del contenedor.
-
----
-
-### Construcción de la imagen
-
-```bash
-docker build -t penguins-api .
-```
-
----
-
-### Ejecución del contenedor
-
-```bash
-docker run --name penguins-api -p 8989:8989 penguins-api
-```
-
-El mapeo `-p 8989:8989` conecta:
-
-- Puerto 8989 del host
-- Puerto 8989 dentro del contenedor
-
-Acceso a la documentación interactiva:
-
-```
-http://localhost:8989/docs
-```
-
----
-
-### Ejecución en background (opcional)
-
-```bash
-docker run -d --name penguins-api -p 8989:8989 penguins-api
-```
-
----
-
-### Verificación del contenedor
-
-```bash
-docker ps
-```
-
-![Texto Alternativo](images/dockerbk.png)
-
----
-
-### Ver logs del servicio
-
-```bash
-docker logs -f penguins-api
-```
-
-![Texto Alternativo](images/dockerlog.png)
-
----
-
-### Prueba de predicción desde consola usando modelo por defecto RF
-
-```bash
-curl -X POST "http://localhost:8989/predict" \
--H "Content-Type: application/json" \
--d '{
-  "island": "Torgersen",
-  "bill_length_mm": 39.1,
-  "bill_depth_mm": 18.7,
-  "flipper_length_mm": 181,
-  "body_mass_g": 3750,
-  "sex": "male",
-  "year": 2007
-}'
-```
-
-![Texto Alternativo](images/prediction.png)
-
----
-
-### BONO
-
----
-
-### Prueba de obtención de lista de modelos disponibles
-
-![Texto Alternativo](images/getmodels.png)
-
----
-
-### Prueba de selección del modelo SVM
-
-![Texto Alternativo](images/selectsvm.png)
-
----
-
-### Prueba de predicción usando modelo SVM
-
-![Texto Alternativo](images/predictionsvm.png)
-
----
-
-La contenerización permite ejecutar la API en cualquier entorno sin depender de la configuración local del sistema.
-
-
-## Notas
-
-- El entrenamiento y el despliegue están desacoplados.
-- Los modelos se cargan dinámicamente desde el folder `models`.
-- El modelo activo puede cambiarse sin reconstruir la imagen Docker.
-- El preprocesamiento está integrado dentro del Pipeline, evitando data leakage.
-
+# Acceder a JupyterLab a través de la URL: http://127.0.0.1:8888/
+Dentro del JupyterLab ingresar al directorio "notebooks" y ejecutar el notebook "entrenamiento_pinguinos.ipynb".
+Los modelos quedaran almacenados en el directorio compartido "models". 
 
