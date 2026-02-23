@@ -1,4 +1,4 @@
-# Penguins Species Classification API – MLOps Taller 1
+# Penguins Species Classification API – MLOps Taller 1 - UV_DockerCompose_Jupyter
 
 # Presentado Por
 - Jacobo Orozco Ardila
@@ -9,27 +9,22 @@
 Este proyecto implementa un flujo completo de Machine Learning utilizando el dataset Palmer Penguins.  
 Se desarrolla el entrenamiento de múltiples modelos y posteriormente se expone un servicio de inferencia mediante FastAPI, el cual es contenerizado usando Docker.
 
-El objetivo principal es aplicar buenas prácticas de MLOps separando el proceso de entrenamiento del proceso de despliegue.
+El objetivo principal de este taller es construir entorno de desarrollo con Docker Compose y JupyterLab e integrarlo con UV.
 
 ---
 
 ## Estructura del Proyecto
 
 ```
-MLOPS_Taller1/
-│
-├── entrenamiento_pinguinos.ipynb   # Entrenamiento y guardado de modelos
-├── main.py                         # API FastAPI
-├── Dockerfile                      # Configuración de la imagen Docker
-├── requirements.txt                # Dependencias del proyecto
-├── README.md
-│
-└── models/
-    ├── logreg.joblib
-    ├── rf.joblib
-    ├── svm.joblib
-    ├── gb.joblib
-    └── registry.json
+Repo/
+├── docker-compose.yml
+├── jupyter/
+│   ├── Dockerfile
+│   └── pyproject.toml
+├── models/              # Tu carpeta existente con .joblib
+├── notebooks/
+│   └── tu_notebook.ipynb
+└── .gitignore
 ```
 
 ---
@@ -92,43 +87,11 @@ Recibe las características de un pingüino y retorna la predicción.
 
 ---
 
-## Cómo ejecutar localmente (sin Docker)
+## Archivos de Docker Compose y JupyterLab + UV
+1. Dockerfile de JupyterLab: /jupyter/Dockerfile
+2. Definir dependencias con UV: /jupyter/pyproject.toml
+3. Docker Compose: ./docker-compose.yaml  
 
-1. Crear entorno virtual o usar conda.
-2. Instalar dependencias:
-
-```bash
-pip install -r requirements.txt
-```
-![Texto Alternativo](images/menv.png)
-
-3. Ejecutar la API:
-
-```bash
-uvicorn main:app --reload --port 8989
-```
-![Texto Alternativo](images/apiup.png)
-
-4. Abrir en navegador:
-
-```
-http://127.0.0.1:8989/docs
-```
-![Texto Alternativo](images/api.png)
-
-![Texto Alternativo](images/getmodels.png)
-
----
-
-## Ejecución con Docker
-
-### 1. Construir la imagen
-
-Desde la raíz del proyecto:
-
-```bash
-docker build -t penguins-api .
-```
 ![Texto Alternativo](images/docker.png)
 
 ### 2. Ejecutar el contenedor
