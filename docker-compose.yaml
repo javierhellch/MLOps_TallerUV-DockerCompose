@@ -1,7 +1,7 @@
 services:
   jupyter:
     build:
-      context: .              # raíz del proyecto
+      context: .
       dockerfile: jupyter/Dockerfile
     container_name: mlops-jupyter
     ports:
@@ -11,4 +11,20 @@ services:
       - ./models:/models
     environment:
       - MODELS_DIR=/models
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: mlops-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/models          # volumen compartido de modelos
+      - ./logs:/app/logs          # logs solo para la API
+    environment:
+      - MODELS_DIR=/models
+    depends_on:
+      - jupyter
     restart: unless-stopped
