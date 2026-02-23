@@ -97,13 +97,29 @@ Líneas de ejecución
 # Construir la imagen
 docker compose build
 
-# Levantar el servicio
+![Texto Alternativo](images/dockerimage.png)
+
+# Levantar el servicio (container)
 docker compose up -d
 
-# Ver logs
+![Texto Alternativo](images/dockercontainer.png)
+
+# Ver logs (opcional)
 docker compose logs -f jupyter
+
+![Texto Alternativo](images/dockerlogs.png)
 
 # Acceder a JupyterLab a través de la URL: http://127.0.0.1:8888/
 Dentro del JupyterLab ingresar al directorio "notebooks" y ejecutar el notebook "entrenamiento_pinguinos.ipynb".
-Los modelos quedaran almacenados en el directorio compartido "models". 
 
+![Texto Alternativo](images/JupyterLab1.png)
+
+![Texto Alternativo](images/JupyterLab2.png)
+
+Los modelos quedarán almacenados en el directorio compartido "models".
+
+![Texto Alternativo](images/models.png)
+
+---
+
+# API 
