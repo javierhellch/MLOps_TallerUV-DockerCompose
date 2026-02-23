@@ -14,6 +14,8 @@ from datetime import datetime
 import json
 import joblib
 import pandas as pd
+import os
+
 
 
 # -------------------------------------------------------------------
@@ -21,7 +23,7 @@ import pandas as pd
 # -------------------------------------------------------------------
 
 # Carpeta donde están los modelos serializados (.joblib) y registry.json
-MODELS_DIR = Path("models")
+MODELS_DIR = Path(os.getenv("MODELS_DIR", "models"))
 
 # Archivo que contiene el registro de modelos disponibles
 REGISTRY_PATH = MODELS_DIR / "registry.json"
