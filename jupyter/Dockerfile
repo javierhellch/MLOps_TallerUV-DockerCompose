@@ -11,7 +11,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 WORKDIR /workspace
 
 #Copia el archivo de dependencias al contenedor antes de instalar, aprovechando el cache de capas de Docker.
-COPY pyproject.toml .
+COPY pyproject.toml uv.lock ./
 
 #UV lee pyproject.toml y crea un entorno virtual con todas las dependencias declaradas. Equivalente a pip install, pero más rápido.
 RUN uv sync
