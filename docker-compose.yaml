@@ -3,12 +3,13 @@ services:
     build:
       context: .
       dockerfile: jupyter/Dockerfile
+      context: ./jupyter # Directorio fuente. Dockerfile y pyproject.toml se ubican acá.
     container_name: mlops-jupyter
     ports:
       - "8888:8888"
-    volumes:
-      - ./notebooks:/workspace/notebooks
-      - ./models:/models
+    volumes: # Volúmenes con persistencia
+      - ./notebooks:/workspace/notebooks # Los notebooks en el repositorio local son visibles y editables dentro del contenedor.
+      - ./models:/models # Directorio compartido de los modelos. Accesible desde la API.
     environment:
       - MODELS_DIR=/models
     restart: unless-stopped
@@ -28,3 +29,5 @@ services:
     depends_on:
       - jupyter
     restart: unless-stopped
+      - MODELS_DIR=/models # Variable que lee el notebook para almacenar los modelos.
+    restart: unless-stopped # El contenedor se reinicia automáticamente si falla, excepto si fue detenido manualmente.
