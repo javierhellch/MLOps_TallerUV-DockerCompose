@@ -21,9 +21,16 @@ EXPOSE 8888
 
 #Comando por defecto al iniciar el contenedor. uv run ejecuta dentro del entorno virtual.
 CMD ["uv", "run", "jupyter", "lab", \
-     "--ip=0.0.0.0", \ 
+     "--ip=0.0.0.0", \
      "--port=8888", \
      "--no-browser", \
      "--allow-root", \
      "--NotebookApp.token=''", \
      "--NotebookApp.password=''"]
+
+     # escucha todas las interfaces de red.
+     # puerto 8888 en el que JupyterLab escucha dentro del container
+     # container no tiene interfaz gráfica, por lo tanto, no intenta abrir browser
+     # ejecuta JupyterLab como usuario root
+     # se desactiva el token de autenticación (ambientes de desarrollo)
+     # se desactiva la contraseña (ambientes de desarrollo)
