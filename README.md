@@ -21,9 +21,9 @@ Repo/
 ├── jupyter/
 │   ├── Dockerfile
 │   └── pyproject.toml
-├── models/              # Tu carpeta existente con .joblib
+├── models/              # directorio compartido con los modelos disponibles
 ├── notebooks/
-│   └── tu_notebook.ipynb
+│   └── entrenamiento_pinguinos.ipynb
 └── .gitignore
 ```
 
