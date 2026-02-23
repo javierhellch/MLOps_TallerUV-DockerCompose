@@ -1,9 +1,0 @@
-{
-  "default_model": "rf",
-  "available_models": [
-    "logreg",
-    "rf",
-    "svm",
-    "gb"
-  ]
-}
