@@ -4,6 +4,7 @@
     "logreg",
     "rf",
     "svm",
-    "gb"
+    "gb",
+    "knn"
   ]
 }
