@@ -1,8 +1,8 @@
-# docker-compose.yml
 services:
   jupyter:
     build:
-      context: ./jupyter
+      context: .              # raíz del proyecto
+      dockerfile: jupyter/Dockerfile
     container_name: mlops-jupyter
     ports:
       - "8888:8888"
