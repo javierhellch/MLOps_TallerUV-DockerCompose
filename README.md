@@ -110,9 +110,10 @@ docker compose logs -f jupyter
 ![Texto Alternativo](images/dockerlogs.png)
 
 # Acceder a JupyterLab a través de la URL: http://127.0.0.1:8888/
-Dentro del JupyterLab ingresar al directorio "notebooks" y ejecutar el notebook "entrenamiento_pinguinos.ipynb".
 
 ![Texto Alternativo](images/JupyterLab1.png)
+
+Dentro del JupyterLab ingresar al directorio "notebooks" y ejecutar el notebook "entrenamiento_pinguinos.ipynb".
 
 ![Texto Alternativo](images/JupyterLab2.png)
 
