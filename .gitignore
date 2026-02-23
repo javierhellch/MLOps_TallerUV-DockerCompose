@@ -213,3 +213,6 @@ __marimo__/
 models/*.joblib
 models/*.pkl
 models/*.json
+
+# Logs de la API
+logs/
