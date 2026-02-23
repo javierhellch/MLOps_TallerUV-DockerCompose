@@ -1,5 +1,4 @@
-# Penguins Species Classification API – MLOps Taller 1 - UV_DockerCompose_Jupyter
-
+# Penguins Species Classification API – MLOps Taller 2 - Desarrollo de Contenedores
 # Presentado Por
 - Jacobo Orozco Ardila
 - Javier Chaparro
@@ -18,13 +17,26 @@ El objetivo principal de este taller es construir entorno de desarrollo con Dock
 ```
 Repo/
 ├── docker-compose.yml
+├── pyproject.toml
+├── uv.lock
+│
+├── api/
+│ ├── Dockerfile
+│ └── penguin_predict/
+│ └── main.py
+│
 ├── jupyter/
-│   ├── Dockerfile
-│   └── pyproject.toml
-├── models/              # directorio compartido con los modelos disponibles
+│ └── Dockerfile
+│
+├── models/ # directorio compartido entre Jupyter y API
+│ ├── *.joblib
+│ └── registry.json
+│
 ├── notebooks/
-│   └── entrenamiento_pinguinos.ipynb
-└── .gitignore
+│ └── entrenamiento_pinguinos.ipynb
+│
+└── logs/
+└── predictions.log
 ```
 
 ---
@@ -71,6 +83,8 @@ La API permite:
 - Seleccionar el modelo activo
 - Realizar predicciones
 
+![Texto Alternativo](images/api/APIdocs.png)
+
 ### Endpoints disponibles
 
 GET `/`  
@@ -95,12 +109,12 @@ Recibe las características de un pingüino y retorna la predicción.
 Líneas de ejecución
 
 # Construir la imagen
-docker compose build
+docker compose build --no-cache
 
 ![Texto Alternativo](images/dockerimage.png)
 
 # Levantar el servicio (container)
-docker compose up -d
+docker compose up
 
 ![Texto Alternativo](images/dockercontainer.png)
 
@@ -109,7 +123,7 @@ docker compose logs -f jupyter
 
 ![Texto Alternativo](images/dockerlogs.png)
 
-# Acceder a JupyterLab a través de la URL: http://127.0.0.1:8888/
+# Acceder a JupyterLab a través de la URL: http://127.0.0.1:8888/lab
 
 ![Texto Alternativo](images/JupyterLab1.png)
 
@@ -124,3 +138,40 @@ Los modelos quedarán almacenados en el directorio compartido "models".
 ---
 
 # API 
+- Construido desde `api/Dockerfile`
+- Utiliza el mismo `pyproject.toml` y `uv.lock`
+- Expone el puerto `8000`
+- Consume modelos desde el volumen compartido `models/`
+- Escribe logs en `logs/predictions.log`
+
+## Volúmenes Compartidos
+
+Docker Compose define volúmenes que permiten comunicación indirecta entre servicios:
+
+- `./models:/models` → permite que la API consuma modelos entrenados en Jupyter.
+- `./logs:/app/logs` → permite persistir logs generados por la API.
+
+![Texto Alternativo](images/api/composeyml.png)
+
+---
+
+## Entorno Unificado con UV
+
+Se definió un único archivo:
+
+- `pyproject.toml`
+- `uv.lock`
+
+Ubicados en la raíz del proyecto.
+
+Esto garantiza que:
+
+- El servicio de entrenamiento (Jupyter)
+- El servicio de inferencia (API)
+
+Utilicen exactamente las mismas versiones de dependencias y la misma versión de Python.
+
+Se utiliza:
+
+```bash
+uv sync --frozen --no-dev
