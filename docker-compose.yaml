@@ -1,8 +1,8 @@
 services:
   jupyter:
     build:
-      context: .
-      dockerfile: jupyter/Dockerfile
+      #context: .
+      #dockerfile: jupyter/Dockerfile
       context: ./jupyter # Directorio fuente. Dockerfile y pyproject.toml se ubican acá.
     container_name: mlops-jupyter
     ports:
